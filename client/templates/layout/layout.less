@@ -1,0 +1,54 @@
+@import "{}/imports/plugins/included/default-theme/client/styles/main.less";
+
+/*FONT*/
+@import url(https://fonts.googleapis.com/css?family=EB+Garamond);
+@font-face {
+  font-family: 'gotham';
+  src: url('/fonts/gotham.ttf');
+
+}
+@font-family-sans-serif: 'gotham';
+h1, h2 {
+  font-family: 'gotham';
+}
+
+/*NAVBAR*/
+@navbar-default-bg: black;
+@link-hover-color: white;
+@navbar-default-link-color: #95a5a6;
+
+.navbar {
+  min-height: 50px;
+  padding-top: 1em;
+  border: none;
+}
+
+.navbar-brand {
+  height: 50px;
+  margin-left: 10px;
+}
+
+.navbar-nav > li > a {
+  line-height: 50px;
+  padding-top: 0px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: white;
+  background-color: transparent;
+}
+@cart-icon-bg: black;
+@cart-icon-text: #a9a9a9;
+@cart-icon-badge: black;
+@cart-icon-padding: 0px 1rem;
+.reaction-navigation-header .navbar-default .navbar-nav, .reaction-navigation-header li>a {
+  font-size: 15px;
+}
+
+/*FOOTER*/
+.footer-default {
+  padding: 0px;
+}
+@footer-default-bg: black;
+@footer-default-color: #95a5a6;
+@link-hover-color: white;

@@ -1,0 +1,199 @@
+  #userPro {
+    margin: 2rem auto;
+    padding: 0 15px;
+    height: 100%;
+  }
+
+  /*//profile image*/
+    #profile .afCloudinary > button {
+        height: 150px;
+        width: 150px;
+        background: darkgrey;
+    }
+
+    #userPro .btn-primary{
+      display: none;
+    }
+
+
+
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+        height: 130px;
+        width: 130px;
+    }
+
+    .btn-file i {
+      width: 130px;
+      line-height: 130px;
+      word-wrap: break-word;
+    }
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+    #userPro #profile {
+      height: 100%;
+      margin-top: 5rem;
+    }
+
+    #userPro #profile .bio, #userPro #profile .style {
+      margin-top: 1rem;
+      font-family: "EB Garamond", serif;
+      font-size: 0.9em;
+    }
+
+    #userPro #profile .style {
+      margin-top: 0;
+      border-bottom: 1px solid darkgrey;
+      padding-bottom: 0.5em;
+    }
+    #addProduct{
+      background: grey;
+      height: 200px;
+      width: 175px;
+      text-align: center;
+      font-size: 4.2em;
+    }
+    #addProduct:hover{
+      background-color: #962823;
+    }
+    #userPro #profile .add-product {
+      line-height: 200px;
+      border-radius: 0;
+    }
+    /*#userPro #profile .add-product:hover {
+    line-height: 200px;
+    padding: 91px 10px;
+    border-radius: 0;
+    color: white;
+    }*/
+    #userPro #profile .btn .add-product {
+      color: white;
+      transition: 0.3s;
+      height: 200px;
+    }
+    #userPro #profile .btn .add-product:hover {
+      text-decoration: none;
+      color: white;
+      transition: 0.3s;
+    }
+    #userPro #profile .btn:hover {
+      background-color: grey;
+    }
+    #userPro #profile .send-email {
+      margin: 1rem 0;
+      border-bottom: 1px solid darkgrey;
+      padding-bottom: 0.5em;
+    }
+    /*send email*/
+    #userPro #profile .send-email a {
+      font-family: 'HelveticaNeue-Bold';
+      color: black;
+      transition: 0.3s;
+    }
+    #userPro #profile .send-email a i {
+      font-size: 1.4em;
+      padding-right: 1em;
+    }
+    #userPro #profile .send-email a:hover {
+      text-decoration: none;
+      color: darkgrey;
+      transition: 0.3s;
+    }
+    #userPro .profile-img, #userPro .uploaded-image {
+      height: 120px;
+      width: 120px;
+      display: block;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+    }
+
+  #userPro #closet {
+    background-color: #FFF;
+    /*margin-top: 2em;*/
+    min-height: 82vh;
+    padding: 2em;
+  }
+
+  .username {
+    font-family: 'HelveticaNeue';
+    font-size: 1.5em;
+  }
+
+  .closet-name {
+    font-family: 'HelveticaNeue-Bold', sans-serif;
+    text-transform: lowercase;
+  }
+  .product-desc {
+    font-family: 'EB Garamond', serif;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+  .product a {
+    font-family: "EB Garamond", serif;
+    color: black;
+    transition: .3s;
+  }
+  .product a:hover {
+    text-decoration: none;
+    color: black;
+    transition: .3s;
+  }
+  .product a:hover .stock {
+    opacity: 0.8;
+  }
+
+input.delete-image {
+  display: block;
+  position: relative;
+  /* right: 0; */
+  text-align: right;
+  float: left;
+  margin: 1em 0;
+  border: none;
+  background: transparent;
+  text-decoration: underline;
+  color: #C1332C;
+}
+.box{
+  height: 200px;
+  background: #5D5D5D;
+  width: 175px;
+  text-align: center;
+}
+.box:hover .fa,
+.box:hover p {
+  color: white;
+}
+.box:hover{
+  background-color: #962823;
+}
+.box > .fa {
+  font-size: 4em;
+  margin-top: 60px;
+}
+.box > p {
+  font-family: 'HelveticaNeue-Bold';
+}
+#closet .row {
+    border-bottom: 1px solid darkgrey;
+}

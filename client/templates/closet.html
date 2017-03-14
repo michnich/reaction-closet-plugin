@@ -1,0 +1,108 @@
+<template name="closet">
+  <div id="userPro" class="container">
+    <div id="profile" class="row">
+      <div class="col-xs-12 col-sm-6 profile-col">
+
+        <div class="row top-profile">
+          <div class="col-md-6 col-xs-12">
+            <div class="user-header-avatar" style="background-image: url({{profilePic}})"></div>
+            
+            <!-- UNCOMMENT  THIS and image below WHEN IMAGE UPLOAD IS READY -->
+            {{#if isUser}}
+              <!-- {{> profileImg}} -->
+              <!--{{#unless profilePic}}-->
+                {{> profileImageForm}}
+                <a style="display:block" class = "btn btn-default add-profile-image">
+                  Add Profile Image
+                </a>
+              <!--{{/unless}}-->
+            {{/if}}
+            <img src="{{image}}" alt="" />
+            <h1 class="username inline">{{firstName}}</h1>
+            <h4 class="inline">{{#if isVerified}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-times-circle"></i>{{/if}}</h4>
+            <!-- {{> profile}} -->
+          </div>
+        </div>
+        <!-- User style -->
+        <h5>{{firstName}}'s style</h5>
+        <div class="style">
+          {{aboutYou}}
+        </div>
+
+
+        <span class="editable" title="Rename this document" data-autotext="never"
+        >{{this}}</span>
+
+        <div class="send-email">
+          <a style="HelveticaNeue-Bold" href="mailto:{{userEmail}}"><i class="fa fa-envelope"></i>Message {{firstName}}</a>
+        </div>
+
+        {{#if isUser}}
+        <div class="edit-profile">
+          <a style="HelveticaNeue-Bold" data-toggle="modal" data-target="#editProfile">Edit Profile</a>
+        </div>
+        {{/if}}
+
+      </div>
+
+      <div id="closet" class="col-xs-12 col-sm-6">
+        <div class="row">
+          <p class="closet-name" style="padding-left:12px;">{{firstName}}'s Closet</p>
+          <div class="col-xs-12 col-md-6 product">
+          <div class="col-xs-12">
+            {{#if isOwner}}
+              <h4>User ID: {{userId}}</h4>
+            {{/if}}
+          </div>
+
+          </div>
+          {{#each products}}
+          <div class="col-xs-12 col-md-6 product">
+            <div class="product">
+              <a class="" href="/product/{{link_id}}">
+                <img src="{{this.image}}" alt="">
+                <div class="description">
+                  <a class="avatar product-desc"> </a>
+                  <p class="price">{{price}}</p>
+                  <p class="condition">{{type}}</p>
+                  <p class="title product-desc">{{name}}</p>
+                  {{#if isListed}}
+                   <i class="fa fa-check-circle-o verified"></i>
+                  {{else}}
+                    <i class="fa fa-times-circle not-verified"></i>
+                  {{/if}}
+                </div>
+              </a>
+              {{#if isOwner}}
+                {{#unless isListed}}
+                <form class="idUpdate">
+                  <fieldset class="form-group">
+                    <label for="product_id">Verify Listing</label>
+                    <input type="text" class="form-control productId" name="text" placeholder="Set product Id" />
+                  </fieldset>
+                  <button type="submit" class="btn-default submit-link hvr-sweep-to-right" data-dismiss="modal">Submit</button>
+                </form>
+                {{/unless}}
+              {{/if}}
+            </div>
+          </div>
+          {{/each}}
+
+
+          <div class="col-xs-12 col-md-6 product">
+            {{#if isUser}}
+              <a href="{{pathFor'addProduct'}}">
+                <div class="box">
+                  <i class="fa fa-plus"></i>
+                  <p>Add Product</p>
+                </div>
+              </a>
+            {{/if}}
+          </div>
+
+          <span class="bottom-hash"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
