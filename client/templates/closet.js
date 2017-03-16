@@ -1,12 +1,15 @@
+import { Router } from "/client/api";
+import { UserProducts} from "/lib/collections";
+
 Template.closet.onCreated(function() {
-  this.subscribe('userProductsByUser', Router.current().params.userId);
+  this.subscribe('userProductsByUser', Router.getParam("userId"));
 });
 
 Template.closet.rendered = function(){
   if (Meteor.user().profile.first_name == undefined){
     Modal.show('editProfile');
   } else {
-    // Modal.hide('editProfile');
+    Modal.hide('editProfile');
   }
   $('[data-toggle="tooltip"]').tooltip();
   $('#setUpLater').on('click',function(){
@@ -15,7 +18,7 @@ Template.closet.rendered = function(){
   });
 
   $('.edit-profile').on('click',function(){
-    Modal.show('editExistingProfile');
+    //Modal.show('editExistingProfile');
   });
 }
 
@@ -24,6 +27,7 @@ Template.closet.rendered = function(){
   right now subscribes to all users so need to limit search
   after should only be subscribed to the seller and can be returned from router
 */
+/*
 Template.closet.helpers({
   isUser: function(){
     return Meteor.user()._id === Router.current().params.userId;
@@ -76,7 +80,7 @@ Template.closet.helpers({
 // verify product has been listed by adding link_id
 Template.closet.events({
   "click .updateIdTrigger": function(event){
-    Modal.show('#updateModal');
+    //Modal.show('#updateModal');
   },
   "submit .idUpdate": function (event){
     event.preventDefault();
@@ -100,7 +104,7 @@ Template.closet.events({
     });
   },
   "click .add-profile-image":function(event){
-    var profileImage = $('.afCloudinary-thumbnail a').attr('href');
+    //var profileImage = $('.afCloudinary-thumbnail a').attr('href');
     console.log(profileImage);
     Meteor.users.update(Meteor.userId(),
     {$set: {
@@ -109,4 +113,4 @@ Template.closet.events({
     }
     );
   }
-});
+});*/

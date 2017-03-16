@@ -1,3 +1,4 @@
+<!--CLOSET TEMPLATE-->
 <template name="closet">
   <div id="userPro" class="container">
     <div id="profile" class="row">
@@ -106,3 +107,99 @@
     </div>
   </div>
 </template>
+
+<template name="editProfile">
+    <div class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">JOIN THE HUNT</h4>
+                </div>
+
+                <div class="modal-body">
+                  <p>First we need a little bit of information from you so that we can build your closet!</p>
+                  <form class="closetinfo">
+                    <fieldset class="form-group">
+                      <label for="first_name">First Name</label>
+                      <input type="text" class="form-control" name="first_name" id="firstName" placeholder="Add Your First Name" />
+                    </fieldset>
+                    <fieldset class="form-group">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" class="form-control" name="last_bane" id="lastName" placeholder="Add Your Last Name">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                      <label for="exampleTextarea">Tell us about your style and what is interesting to you.</label>
+                      <textarea class="form-control" name="about" id="aboutYou" rows="3"></textarea>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary closet-info-btn">Submit</button>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    {{#if isUser}}
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      {{else}}
+                      <a href="/" id="setUpLater" data-toggle="tooltip" data-placement="top" title="You won't be able to start adding your products though!"><button type="button" name="btn btn-default" class="btn btn-default">Set up later</button></a>
+                    {{/if}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--EDIT PROFILE
+<template name="editExistingProfile">
+    <div class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">EDIT YOUR CLOSET</h4>
+                </div>
+
+                <div class="modal-body">
+                  <form class="closetinfo">
+                    <fieldset class="form-group">
+                      <label for="first_name">First Name</label>
+                      <input type="text" class="form-control" name="first_name" id="firstName" placeholder="Add Your First Name" />
+                    </fieldset>
+                    <fieldset class="form-group">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Add Your Last Name">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                      <label for="exampleTextarea">Tell us about your style and what is interesting to you.</label>
+                      <textarea class="form-control" name="about" id="aboutYou" rows="3"></textarea>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary closet-info-btn">Submit</button>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>-->
+
+<!--PROFILE IMAGE
+<template name="profileImg">
+  <p class="profile-img img-responsive">
+    <span style="background-color:darkgrey" class="btn btn-default btn-file">
+    <i>Profile Pic</i>
+    {{> uploadImage imageCollection="userImages" doc=currentUser classImage="image-round" classInput="image-picker" inputName="user-image"}}
+    </span>
+  </p>
+</template>-->
+
+<!--PROFILE IMAGE
+<template name="profileImageForm">
+  {{> quickForm collection="profileImages" type="insert" id="add-profile-image"}}
+</template>-->

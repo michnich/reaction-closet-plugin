@@ -7,7 +7,7 @@ Reaction.registerPackage({
   autoEnable: true,
   registry: [
     {
-      route: "closet",
+      route: "closet/:userId",
       name: "closet",
       template: "closet",
       workflow: "coreWorkflow"

@@ -1,9 +1,3 @@
 import "./closet.html";
 import "./closet.js";
-import "./editCloset.html";
-import "./editCloset.js";
-import "./profileImage.html";
-import "./setupCloset.html";
-import "./setupCloset.js";
 import "./closet.css";
-import "./layout";
