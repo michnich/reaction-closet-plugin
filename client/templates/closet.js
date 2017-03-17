@@ -1,20 +1,24 @@
 import { Router } from "/client/api";
-import { UserProducts} from "/lib/collections";
+import { UserProducts } from "/lib/collections";
+import { Accounts } from '/lib/collections';
 
 Template.closet.onCreated(function() {
-  this.subscribe('userProductsByUser', Router.getParam("userId"));
+  //this.subscribe('userProductsByUser', Router.getParam("userId"));
 });
 
 Template.closet.rendered = function(){
-  if (Meteor.user().profile.first_name == undefined){
-    Modal.show('editProfile');
-  } else {
-    Modal.hide('editProfile');
-  }
+  const account = Accounts.findOne({
+      userId: Meteor.userId()
+    });
+
+  if (account.profile.first_name == undefined){
+    $('#editProfile').modal('show');
+  };
   $('[data-toggle="tooltip"]').tooltip();
   $('#setUpLater').on('click',function(){
+    //$('#editProfile').hide('hide');
+    $('#editProfile').close();
     Router.go('/');
-    Modal.hide('editProfile');
   });
 
   $('.edit-profile').on('click',function(){

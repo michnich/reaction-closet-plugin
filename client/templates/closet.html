@@ -106,17 +106,14 @@
       </div>
     </div>
   </div>
-</template>
 
-<template name="editProfile">
-    <div class="modal fade" data-backdrop="static" data-keyboard="false">
+  <!--EDIT PROFILE MODAL-->
+  <div class="modal fade" data-backdrop="static" data-keyboard="false" id="editProfile">
         <div class="modal-dialog">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h4 class="modal-title">JOIN THE HUNT</h4>
                 </div>
-
                 <div class="modal-body">
                   <p>First we need a little bit of information from you so that we can build your closet!</p>
                   <form class="closetinfo">
@@ -136,7 +133,6 @@
                     <button type="submit" class="btn btn-primary closet-info-btn">Submit</button>
                   </form>
                 </div>
-
                 <div class="modal-footer">
                     {{#if isUser}}
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -144,11 +140,12 @@
                       <a href="/" id="setUpLater" data-toggle="tooltip" data-placement="top" title="You won't be able to start adding your products though!"><button type="button" name="btn btn-default" class="btn btn-default">Set up later</button></a>
                     {{/if}}
                 </div>
-
             </div>
         </div>
     </div>
 </template>
+
+
 
 <!--EDIT PROFILE
 <template name="editExistingProfile">
