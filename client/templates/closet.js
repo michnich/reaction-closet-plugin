@@ -1,6 +1,7 @@
 import { Router } from "/client/api";
 import { UserProducts } from "/lib/collections";
 import { Accounts } from '/lib/collections';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 Template.closet.onCreated(function() {
   //this.subscribe('userProductsByUser', Router.getParam("userId"));
@@ -11,12 +12,13 @@ Template.closet.rendered = function(){
       userId: Meteor.userId()
     });
 
+  Template.instance().accountId = new ReactiveVar(account._id);
+
   if (account.profile.first_name == undefined){
     $('#editProfile').modal('show');
   };
   $('[data-toggle="tooltip"]').tooltip();
   $('#setUpLater').on('click',function(){
-    //$('#editProfile').hide('hide');
     $('#editProfile').close();
     Router.go('/');
   });
@@ -78,12 +80,37 @@ Template.closet.helpers({
     var user = Router.current().params.userId;
     return Meteor.users.findOne({"_id":user}).profile.profile_pic;
   }
-});
+});*/
 
 
 // verify product has been listed by adding link_id
 Template.closet.events({
-  "click .updateIdTrigger": function(event){
+  /*INITIAL PROFILE SETUP*/
+  "submit .closetinfo": function (event) {
+    event.preventDefault();
+   
+    // Get the first name, last name and about
+    var profile = {
+      "first_name": $('#firstName').val(),
+      "last_name": $('#lastName').val(),
+      "about": $('#aboutYou').val()
+    };
+
+    //Update user profile using reaction Account id
+    var accountId = Template.instance().accountId.get();
+    /*Accounts.update({"_id": accountId}, {
+      $set: {
+        'profile.first_name': first_name,
+        'profile.last_name': last_name,
+        'profile.about': about
+      }
+    });*/
+    Accounts.update({"_id": accountId}, {$set: {"profile": profile}});
+
+    // hide modal
+     $('#editProfile').modal('hide');
+  }
+  /*"click .updateIdTrigger": function(event){
     //Modal.show('#updateModal');
   },
   "submit .idUpdate": function (event){
@@ -116,5 +143,5 @@ Template.closet.events({
       }
     }
     );
-  }
-});*/
+  }*/
+});
