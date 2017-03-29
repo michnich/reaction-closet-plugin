@@ -2,24 +2,37 @@ import { Router } from "/client/api";
 import { UserProducts } from "/lib/collections";
 import { Accounts } from '/lib/collections';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from "meteor/meteor";
 
 Template.closet.onCreated(function() {
   //this.subscribe('userProductsByUser', Router.getParam("userId"));
+  Session.set("userCloset", {});
 });
 
 Template.closet.rendered = function(){
-  const account = Accounts.findOne({
-      userId: Meteor.userId()
-    });
+  //account of logged in user
+  var accountId = Meteor.userId();
 
-  Template.instance().accountId = new ReactiveVar(account._id);
+  //user profile, only return their closet
+  var closet = Accounts.findOne({
+      userId: FlowRouter.getParam("userId")
+    },
+    {"profile.closet": 1,
+     "userId": 1});
 
-  if (account.profile.first_name == undefined){
+  //for use in helpers
+  Session.set("userCloset", closet);
+  //if this is the logged in users profile and the first name isn't set
+  //show modal to set up closet
+  if ((accountId == closet.userId) && (_.isEmpty(closet.profile.closet))){
     $('#editProfile').modal('show');
   };
   $('[data-toggle="tooltip"]').tooltip();
+
+  //if the user clicks set up later, redirects to homepage and closes modal
   $('#setUpLater').on('click',function(){
     $('#editProfile').close();
+    $('.modal-backdrop').remove();
     Router.go('/');
   });
 
@@ -33,15 +46,15 @@ Template.closet.rendered = function(){
   right now subscribes to all users so need to limit search
   after should only be subscribed to the seller and can be returned from router
 */
-/*
+
 Template.closet.helpers({
   isUser: function(){
-    return Meteor.user()._id === Router.current().params.userId;
+    return Meteor.userId() === FlowRouter.getParam("userId");
   },
   isOwner: function(){
     return Roles.userIsInRole(Meteor.userId(),['dashboard','owner','admin']);
   },
-  username: function(){
+  /*username: function(){
     return Meteor.users.findOne({"_id": Router.current().params.userId}).profile.username;
   },
   userEmail: function(){
@@ -50,17 +63,15 @@ Template.closet.helpers({
   },
   userId: function() {
     return Router.current().params.userId;;
-  },
+  },*/
   //super important function that allows us to index the current user that is showed in closet
   firstName: function(){
-    var user = Router.current().params.userId;
-    return Meteor.users.findOne({"_id":user}).profile.first_name;
+    return Session.get("userCloset").profile.closet.first_name;
   },
   aboutYou: function(){
-    var user = Router.current().params.userId;
-    return Meteor.users.findOne({"_id":user}).profile.about;
+    return Session.get("userCloset").profile.closet.about;
   },
-  products: function(){
+  /*products: function(){
     var user = Router.current().params.userId;
     var email = Meteor.users.findOne({"_id":user}).emails[0].address;
     return userProducts.find({author: email}).fetch()
@@ -79,13 +90,13 @@ Template.closet.helpers({
   profilePic: function () {
     var user = Router.current().params.userId;
     return Meteor.users.findOne({"_id":user}).profile.profile_pic;
-  }
-});*/
+  }*/
+});
 
 
 // verify product has been listed by adding link_id
 Template.closet.events({
-  /*INITIAL PROFILE SETUP*/
+  //INITIAL PROFILE SETUP
   "submit .closetinfo": function (event) {
     event.preventDefault();
    
@@ -97,15 +108,8 @@ Template.closet.events({
     };
 
     //Update user profile using reaction Account id
-    var accountId = Template.instance().accountId.get();
-    /*Accounts.update({"_id": accountId}, {
-      $set: {
-        'profile.first_name': first_name,
-        'profile.last_name': last_name,
-        'profile.about': about
-      }
-    });*/
-    Accounts.update({"_id": accountId}, {$set: {"profile": profile}});
+    var id = Meteor.userId();
+    Meteor.call('closet/addCloset', id, profile);
 
     // hide modal
      $('#editProfile').modal('hide');
