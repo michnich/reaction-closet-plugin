@@ -7,6 +7,7 @@ import { Meteor } from "meteor/meteor";
 Template.closet.onCreated(function() {
   //this.subscribe('userProductsByUser', Router.getParam("userId"));
   Session.set("userCloset", {});
+  this.subscribe("userCloset", FlowRouter.getParam("userId"));
 });
 
 Template.closet.rendered = function(){
@@ -16,29 +17,28 @@ Template.closet.rendered = function(){
   //user profile, only return their closet
   var closet = Accounts.findOne({
       userId: FlowRouter.getParam("userId")
-    },
-    {"profile.closet": 1,
-     "userId": 1});
+    });
 
   //for use in helpers
   Session.set("userCloset", closet);
+
   //if this is the logged in users profile and the first name isn't set
   //show modal to set up closet
   if ((accountId == closet.userId) && (_.isEmpty(closet.profile.closet))){
     $('#editProfile').modal('show');
   };
-  $('[data-toggle="tooltip"]').tooltip();
+  //$('[data-toggle="tooltip"]').tooltip();
 
   //if the user clicks set up later, redirects to homepage and closes modal
-  $('#setUpLater').on('click',function(){
-    $('#editProfile').close();
+  /*$('#setUpLater').on('click',function(){
     $('.modal-backdrop').remove();
+    $('#editProfile').close();
     Router.go('/');
-  });
+  });*/
 
-  $('.edit-profile').on('click',function(){
-    //Modal.show('editExistingProfile');
-  });
+  /*$('.edit-profile').on('click',function(){
+    $('#editExistingProfile').modal('show');
+  });*/
 }
 
 /*
@@ -68,9 +68,12 @@ Template.closet.helpers({
   firstName: function(){
     return Session.get("userCloset").profile.closet.first_name;
   },
+  lastName: function() {
+    return Session.get("userCloset").profile.closet.last_name;
+  },
   aboutYou: function(){
     return Session.get("userCloset").profile.closet.about;
-  },
+  }
   /*products: function(){
     var user = Router.current().params.userId;
     var email = Meteor.users.findOne({"_id":user}).emails[0].address;
@@ -112,8 +115,36 @@ Template.closet.events({
     Meteor.call('closet/addCloset', id, profile);
 
     // hide modal
-     $('#editProfile').modal('hide');
-  }
+    $('#editProfile').modal('hide');
+
+    Session.set("userCloset", profile);
+  },
+  "submit .closetUpdate": function(event) {
+    event.preventDefault();
+   
+    // Get the first name, last name and about
+    var profile = {
+      "first_name": $('#first').val(),
+      "last_name": $('#last').val(),
+      "about": $('#about').val()
+    };
+
+    //Update user profile using reaction Account id
+    var id = Meteor.userId();
+    Meteor.call('closet/updateCloset', id, profile);
+
+    // hide modal
+    $('#editExistingProfile').modal('hide');
+
+    Session.set("userCloset", profile);
+
+  },
+  "click #setUpLater": function(event) {
+    $('#editProfile').modal('hide');
+    $('.modal-backdrop').remove();
+    Router.go('/');
+    $('.modal-backdrop').remove();
+  },
   /*"click .updateIdTrigger": function(event){
     //Modal.show('#updateModal');
   },

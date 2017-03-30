@@ -30,8 +30,28 @@ function addCloset(accountId, profile) {
 	check(profile.about, String);
 	//update account
 	Accounts.update({"userId": accountId},  {$set: {"profile.closet": profile}}, {upsert: true});
-}
+};
+
+function updateCloset(accountId, profile) {
+	//check all parameters
+	check(accountId, String);
+	check(profile, Object);
+	check(profile.first_name, String);
+	check(profile.last_name, String);
+	check(profile.about, String);
+	//update account
+	Accounts.update({"userId": accountId},  {$set: {"profile.closet": profile}});
+};
 
 Meteor.methods({
-  "closet/addCloset": addCloset
+  "closet/addCloset": addCloset,
+  "closet/updateCloset": updateCloset
+});
+
+
+Meteor.publish('userCloset', function (id) {
+  check(id, String);
+  return Accounts.find({"userId": id}, {
+    fields: { "profile.closet": 1 }
+  });
 });

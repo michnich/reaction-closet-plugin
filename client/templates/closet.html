@@ -7,16 +7,14 @@
         <div class="row top-profile">
           <div class="col-md-6 col-xs-12">
             <div class="user-header-avatar" style="background-image: url({{profilePic}})"></div>
-            
-            <!-- UNCOMMENT  THIS and image below WHEN IMAGE UPLOAD IS READY -->
             {{#if isUser}}
-              <!-- {{> profileImg}} -->
-              <!--{{#unless profilePic}}-->
-                <!--{{> profileImageForm}}-->
+              {{> profileImg}}
+              {{#unless profilePic}}
+                {{> profileImageForm}}
                 <a style="display:block" class = "btn btn-default add-profile-image">
                   Add Profile Image
                 </a>
-              <!--{{/unless}}-->
+              {{/unless}}
             {{/if}}
             <img src="{{image}}" alt="" />
             <h1 class="username inline">{{firstName}}</h1>
@@ -40,7 +38,7 @@
 
         {{#if isUser}}
         <div class="edit-profile">
-          <a style="HelveticaNeue-Bold" data-toggle="modal" data-target="#editProfile">Edit Profile</a>
+          <a style="HelveticaNeue-Bold" data-toggle="modal" data-target="#editExistingProfile">Edit Profile</a>
         </div>
         {{/if}}
 
@@ -107,7 +105,7 @@
     </div>
   </div>
 
-  <!--EDIT PROFILE MODAL-->
+  <!--EDIT PROFILE MODAL (INITIAL SETUP)-->
   <div class="modal fade" data-backdrop="static" data-keyboard="false" id="editProfile">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -134,12 +132,49 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                    {{#if isUser}}
+                    <!--{{#if isUser}}
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      {{else}}
+                      {{else}}-->
                       <a href="/" id="setUpLater" data-toggle="tooltip" data-placement="top" title="You won't be able to start adding your products though!"><button type="button" name="btn btn-default" class="btn btn-default">Set up later</button></a>
-                    {{/if}}
+                    <!--{{/if}}-->
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--EDIT EXISTING PROFILE-->
+     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="editExistingProfile">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">EDIT YOUR CLOSET</h4>
+                </div>
+
+                <div class="modal-body">
+                  <form class="closetUpdate">
+                    <fieldset class="form-group">
+                      <label for="first_name">First Name</label>
+                      <input type="text" class="form-control" name="first_name" id="first" value="{{firstName}}"/>
+                    </fieldset>
+                    <fieldset class="form-group">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" class="form-control" name="last_name" id="last" value="{{lastName}}">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                      <label for="exampleTextarea">Tell us about your style and what is interesting to you.</label>
+                      <textarea class="form-control" name="about" id="about" rows="3" value="{{aboutYou}}"></textarea>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary closet-info-btn">Submit</button>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -186,17 +221,17 @@
     </div>
 </template>-->
 
-<!--PROFILE IMAGE
+<!--PROFILE IMAGE-->
 <template name="profileImg">
   <p class="profile-img img-responsive">
     <span style="background-color:darkgrey" class="btn btn-default btn-file">
     <i>Profile Pic</i>
-    {{> uploadImage imageCollection="userImages" doc=currentUser classImage="image-round" classInput="image-picker" inputName="user-image"}}
+    <!--{{> uploadImage imageCollection="userImages" doc=currentUser classImage="image-round" classInput="image-picker" inputName="user-image"}}-->
     </span>
   </p>
-</template>-->
+</template>
 
-<!--PROFILE IMAGE
+<!--PROFILE IMAGE-->
 <template name="profileImageForm">
-  {{> quickForm collection="profileImages" type="insert" id="add-profile-image"}}
-</template>-->
+  <!--{{> quickForm collection="profileImages" type="insert" id="add-profile-image"}}-->
+</template>
