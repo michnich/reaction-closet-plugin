@@ -43,9 +43,26 @@ function updateCloset(accountId, profile) {
 	Accounts.update({"userId": accountId},  {$set: {"profile.closet": profile}});
 };
 
+function addProfilePic(accountId, profilePic) {
+	check(accountId, String);
+	check(profilePic, String);
+	Accounts.update({"userId": accountId}, {$set: {"profile.closet.profile_pic": profilePic}}, {upsert: true});
+};
+
+function editProfilePic(accountId, profilePic) {
+	check(accountId, String);
+	check(profilePic, String);
+	Accounts.update({"userId": accountId}, {$set: {"profile.closet.profile_pic": profilePic}});
+	//delete old pic from cloudinary??
+};
+
+
+
 Meteor.methods({
   "closet/addCloset": addCloset,
-  "closet/updateCloset": updateCloset
+  "closet/updateCloset": updateCloset,
+  "closet/addProfilePic": addProfilePic,
+  "closet/editProfilePic": editProfilePic
 });
 
 

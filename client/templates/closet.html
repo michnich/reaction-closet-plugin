@@ -6,9 +6,11 @@
 
         <div class="row top-profile">
           <div class="col-md-6 col-xs-12">
-            <div class="user-header-avatar" style="background-image: url({{profilePic}})"></div>
+            <div class="user-header-avatar">
+              <img src="{{profilePic}}">
+            </div>
             {{#if isUser}}
-              {{> profileImg}}
+              <!--{{> profileImg}}-->
               {{#unless profilePic}}
                 {{> profileImageForm}}
                 <a style="display:block" class = "btn btn-default add-profile-image">
@@ -233,5 +235,5 @@
 
 <!--PROFILE IMAGE-->
 <template name="profileImageForm">
-  <!--{{> quickForm collection="profileImages" type="insert" id="add-profile-image"}}-->
+  {{> quickForm collection=Collections.ProfileImages type="insert" id="add-profile-image"}}
 </template>

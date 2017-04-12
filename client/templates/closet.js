@@ -1,8 +1,17 @@
 import { Router } from "/client/api";
-import { UserProducts } from "/lib/collections";
 import { Accounts } from '/lib/collections';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from "meteor/meteor";
+//import { ProfileImages } from '../../profileImages.js';
+import { ProfileImages } from '../profileImages';
+//import { ProfileImages } from '../profileImages.js';
+
+//FOR PROFILE IMAGE FORM
+const Collections = {
+  ProfileImages
+};
+
+Template.registerHelper('Collections', Collections);
 
 Template.closet.onCreated(function() {
   //this.subscribe('userProductsByUser', Router.getParam("userId"));
@@ -73,7 +82,7 @@ Template.closet.helpers({
   },
   aboutYou: function(){
     return Session.get("userCloset").profile.closet.about;
-  }
+  },
   /*products: function(){
     var user = Router.current().params.userId;
     var email = Meteor.users.findOne({"_id":user}).emails[0].address;
@@ -89,11 +98,10 @@ Template.closet.helpers({
   profileUrl: function(){
     var imageSource = $('.uploaded-image').attr('src');
     return imageSource;
-  },
+  },*/
   profilePic: function () {
-    var user = Router.current().params.userId;
-    return Meteor.users.findOne({"_id":user}).profile.profile_pic;
-  }*/
+    return Session.get("userCloset").profile.closet.profile_pic;
+  }
 });
 
 
@@ -168,15 +176,22 @@ Template.closet.events({
       text: 'Mailgun is totally awesome for sending emails!',
       html: '<h1>Congratulations</h1> <br> <h2>Your Product has been listed on the shop! You are well on your way to cashing in!</h2>'
     });
-  },
-  "click .add-profile-image":function(event){
-    //var profileImage = $('.afCloudinary-thumbnail a').attr('href');
+  },*/
+  "click .add-profile-image": function(event){
+    console.log("this was called");
+    var profileImage = $('.afCloudinary-thumbnail a').attr('href');
     console.log(profileImage);
-    Meteor.users.update(Meteor.userId(),
-    {$set: {
-      'profile.profile_pic': profileImage
+    var id = Meteor.userId();
+    Meteor.call('closet/addProfilePic', id, profileImage, function(error, result) {
+      if (!error) {
+        var user = Session.get("userCloset");
+        user.profile_pic = profileImage;
       }
-    }
-    );
-  }*/
+      else {
+        //style this
+        alert("Something went wrong. Please try again. " + error.message);
+      }
+    });
+
+  }
 });
