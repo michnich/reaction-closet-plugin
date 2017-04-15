@@ -3,7 +3,7 @@ import { Accounts } from '/lib/collections';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from "meteor/meteor";
 //import { ProfileImages } from '../../profileImages.js';
-import { ProfileImages } from '../profileImages';
+import { ProfileImages } from '../../lib/profileImages.js';
 //import { ProfileImages } from '../profileImages.js';
 
 //FOR PROFILE IMAGE FORM
@@ -16,6 +16,7 @@ Template.registerHelper('Collections', Collections);
 Template.closet.onCreated(function() {
   //this.subscribe('userProductsByUser', Router.getParam("userId"));
   Session.set("userCloset", {});
+  Session.set("editImage", false);
   this.subscribe("userCloset", FlowRouter.getParam("userId"));
 });
 
@@ -101,6 +102,9 @@ Template.closet.helpers({
   },*/
   profilePic: function () {
     return Session.get("userCloset").profile.closet.profile_pic;
+  },
+  edit: function() {
+    return Session.get("editImage");
   }
 });
 
@@ -122,11 +126,13 @@ Template.closet.events({
     var id = Meteor.userId();
     Meteor.call('closet/addCloset', id, profile);
 
-    // hide modal
+    // close current modal
     $('#editProfile').modal('hide');
 
     Session.set("userCloset", profile);
   },
+
+  //EDIT PROFILE
   "submit .closetUpdate": function(event) {
     event.preventDefault();
    
@@ -134,7 +140,8 @@ Template.closet.events({
     var profile = {
       "first_name": $('#first').val(),
       "last_name": $('#last').val(),
-      "about": $('#about').val()
+      "about": $('#about').val(),
+      "profile_pic": Session.get('userCloset').profile_pic
     };
 
     //Update user profile using reaction Account id
@@ -177,21 +184,46 @@ Template.closet.events({
       html: '<h1>Congratulations</h1> <br> <h2>Your Product has been listed on the shop! You are well on your way to cashing in!</h2>'
     });
   },*/
+  //initial profile image set
   "click .add-profile-image": function(event){
-    console.log("this was called");
     var profileImage = $('.afCloudinary-thumbnail a').attr('href');
-    console.log(profileImage);
     var id = Meteor.userId();
     Meteor.call('closet/addProfilePic', id, profileImage, function(error, result) {
       if (!error) {
-        var user = Session.get("userCloset");
+        var user = Session.get('userCloset');
         user.profile_pic = profileImage;
+        Session.set("userCloset", user);
       }
       else {
         //style this
         alert("Something went wrong. Please try again. " + error.message);
       }
     });
-
+  },
+  //hides current profile image and edit button
+  //sets session variable so edit form and submit button is shown
+  "click .edit-profile-image": function(event) {
+    $(".edit-profile-image").hide();
+    $(".user-header-avatar").hide();
+    Session.set("editImage", true);
+  },
+  //when the user edits their profile image
+  "click .submit-profile-image": function(event) {
+    var profileImage = $('.afCloudinary-thumbnail a').attr('href');
+    var id = Meteor.userId();
+    Meteor.call('closet/editProfilePic', id, profileImage, function(error, result) {
+      if (!error) {
+        var user = Session.get('userCloset');
+        user.profile_pic = profileImage;
+        Session.set("userCloset", user);
+      }
+      else {
+        //style this
+        alert("Something went wrong. Please try again. " + error.message);
+      }
+    });
+    Session.set("editImage", false);
+    $(".edit-profile-image").show();
+    $(".user-header-avatar").show();
   }
 });

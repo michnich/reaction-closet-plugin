@@ -3,21 +3,31 @@
   <div id="userPro" class="container">
     <div id="profile" class="row">
       <div class="col-xs-12 col-sm-6 profile-col">
-
         <div class="row top-profile">
           <div class="col-md-6 col-xs-12">
             <div class="user-header-avatar">
               <img src="{{profilePic}}">
             </div>
             {{#if isUser}}
-              <!--{{> profileImg}}-->
               {{#unless profilePic}}
                 {{> profileImageForm}}
                 <a style="display:block" class = "btn btn-default add-profile-image">
                   Add Profile Image
                 </a>
               {{/unless}}
+              {{#if profilePic}}
+                 <a style="display:block" class = "btn btn-default edit-profile-image">
+                  Edit Profile Image
+                </a>
+                {{#if edit}}
+                   {{> editProfileImage}}
+                    <a style="display:block" class="btn btn-default submit-profile-image">
+                    Submit
+                    </a>
+                {{/if}}
+              {{/if}}
             {{/if}}
+
             <img src="{{image}}" alt="" />
             <h1 class="username inline">{{firstName}}</h1>
             <h4 class="inline">{{#if isVerified}}<i class="fa fa-check-circle-o"></i>{{else}}<i class="fa fa-times-circle"></i>{{/if}}</h4>
@@ -145,7 +155,7 @@
     </div>
 
 
-    <!--EDIT EXISTING PROFILE-->
+    <!--EDIT EXISTING PROFILE MODAL-->
      <div class="modal fade" data-backdrop="static" data-keyboard="false" id="editExistingProfile">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -182,58 +192,11 @@
     </div>
 </template>
 
-
-
-<!--EDIT PROFILE
-<template name="editExistingProfile">
-    <div class="modal fade" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">EDIT YOUR CLOSET</h4>
-                </div>
-
-                <div class="modal-body">
-                  <form class="closetinfo">
-                    <fieldset class="form-group">
-                      <label for="first_name">First Name</label>
-                      <input type="text" class="form-control" name="first_name" id="firstName" placeholder="Add Your First Name" />
-                    </fieldset>
-                    <fieldset class="form-group">
-                      <label for="last_name">Last Name</label>
-                      <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Add Your Last Name">
-                    </fieldset>
-
-                    <fieldset class="form-group">
-                      <label for="exampleTextarea">Tell us about your style and what is interesting to you.</label>
-                      <textarea class="form-control" name="about" id="aboutYou" rows="3"></textarea>
-                    </fieldset>
-                    <button type="submit" class="btn btn-primary closet-info-btn">Submit</button>
-                  </form>
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</template>-->
-
-<!--PROFILE IMAGE-->
-<template name="profileImg">
-  <p class="profile-img img-responsive">
-    <span style="background-color:darkgrey" class="btn btn-default btn-file">
-    <i>Profile Pic</i>
-    <!--{{> uploadImage imageCollection="userImages" doc=currentUser classImage="image-round" classInput="image-picker" inputName="user-image"}}-->
-    </span>
-  </p>
-</template>
-
 <!--PROFILE IMAGE-->
 <template name="profileImageForm">
-  {{> quickForm collection=Collections.ProfileImages type="insert" id="add-profile-image"}}
+  {{> quickForm collection=Collections.ProfileImages type="insert" id="add-image"}} <!--cloudinary quickform-->
+</template>
+<!--EDIT PROFILE IMAGE-->
+<template name="editProfileImage">
+  {{> quickForm collection=Collections.ProfileImages type="update" id="edit-image"}} <!--cloudinary quickform-->
 </template>
