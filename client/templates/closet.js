@@ -30,7 +30,7 @@ Template.closet.rendered = function(){
     });
 
   //for use in helpers
-  Session.set("userCloset", closet);
+  Session.set("userCloset", closet.profile.closet);
 
   //if this is the logged in users profile and the first name isn't set
   //show modal to set up closet
@@ -76,13 +76,13 @@ Template.closet.helpers({
   },*/
   //super important function that allows us to index the current user that is showed in closet
   firstName: function(){
-    return Session.get("userCloset").profile.closet.first_name;
+    return Session.get("userCloset").first_name;
   },
   lastName: function() {
-    return Session.get("userCloset").profile.closet.last_name;
+    return Session.get("userCloset").last_name;
   },
   aboutYou: function(){
-    return Session.get("userCloset").profile.closet.about;
+    return Session.get("userCloset").about;
   },
   /*products: function(){
     var user = Router.current().params.userId;
@@ -101,7 +101,7 @@ Template.closet.helpers({
     return imageSource;
   },*/
   profilePic: function () {
-    return Session.get("userCloset").profile.closet.profile_pic;
+    return Session.get("userCloset").profile_pic;
   },
   edit: function() {
     return Session.get("editImage");
