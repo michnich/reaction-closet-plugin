@@ -12,27 +12,30 @@ const Collections = {
 Template.registerHelper('Collections', Collections);
 
 Template.closet.onCreated(function() {
-  //this.subscribe('allProducts');
-  //Session.set("userCloset", {});
+  Session.set("userCloset", {});
   Session.set("editImage", false);
 
-  this.userCloset = new ReactiveVar( false );
+  Template.instance().userCloset = new ReactiveVar( false );
 });
 
 Template.closet.rendered = function(){
   var userId = FlowRouter.getParam("userId");
-  this.subscribe("userCloset", userId);
+  console.log(userId);
+  this.subscribe("userCloset", userId, function() {
+    var account = Accounts.findOne({
+      "userId": userId
+    });
+    console.log(userId);
+    console.log(account);
+    Session.set('userCloset',account);
+    //console.log(Template.instance().userCloset.get());    
+  });
   this.subscribe('userProductsByUser', userId);
 
   //account of logged in user
   var accountId = Meteor.userId();
-
-  console.log('getting closet');
   //user profile, only return their closet
-  this.userCloset.set(Accounts.findOne({
-      userId: userId
-    }));
-  console.log(this.userCloset.get());
+  
 
 
   //for use in helpers
