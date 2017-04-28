@@ -1,6 +1,8 @@
 import { check } from "meteor/check";
+import { Meteor } from 'meteor/meteor';
 import { Packages, Shops, Accounts } from "/lib/collections";
 import { Hooks, Reaction } from "/server/api";
+import { UserProducts } from '../../product_upload/lib/collections';
 
 function addRolesToVisitors() {
   // Add the about permission to all default roles since it's available to all

@@ -2,9 +2,7 @@ import { Router } from "/client/api";
 import { Accounts } from '/lib/collections';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from "meteor/meteor";
-//import { ProfileImages } from '../../profileImages.js';
 import { ProfileImages } from '../../lib/profileImages.js';
-//import { ProfileImages } from '../profileImages.js';
 
 //FOR PROFILE IMAGE FORM
 const Collections = {
@@ -14,23 +12,31 @@ const Collections = {
 Template.registerHelper('Collections', Collections);
 
 Template.closet.onCreated(function() {
-  //this.subscribe('userProductsByUser', Router.getParam("userId"));
-  Session.set("userCloset", {});
+  //this.subscribe('allProducts');
+  //Session.set("userCloset", {});
   Session.set("editImage", false);
-  this.subscribe("userCloset", FlowRouter.getParam("userId"));
+
+  this.userCloset = new ReactiveVar( false );
 });
 
 Template.closet.rendered = function(){
+  var userId = FlowRouter.getParam("userId");
+  this.subscribe("userCloset", userId);
+  this.subscribe('userProductsByUser', userId);
+
   //account of logged in user
   var accountId = Meteor.userId();
 
+  console.log('getting closet');
   //user profile, only return their closet
-  var closet = Accounts.findOne({
-      userId: FlowRouter.getParam("userId")
-    });
+  this.userCloset.set(Accounts.findOne({
+      userId: userId
+    }));
+  console.log(this.userCloset.get());
+
 
   //for use in helpers
-  Session.set("userCloset", closet.profile.closet);
+  //Session.set("userCloset", closet.profile.closet);
 
   //if this is the logged in users profile and the first name isn't set
   //show modal to set up closet
@@ -76,7 +82,7 @@ Template.closet.helpers({
   },*/
   //super important function that allows us to index the current user that is showed in closet
   firstName: function(){
-    return Session.get("userCloset").first_name;
+    return Template.instance().userCloset.get().first_name;
   },
   lastName: function() {
     return Session.get("userCloset").last_name;
