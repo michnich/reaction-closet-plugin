@@ -71,6 +71,6 @@ Meteor.methods({
 Meteor.publish('userCloset', function (id) {
   check(id, String);
   return Accounts.find({"userId": id}, {
-    fields: { "profile.closet": 1 }
+    fields: { "profile.closet": 1, "userId": 1 }
   });
 });
