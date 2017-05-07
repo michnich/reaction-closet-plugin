@@ -1,5 +1,6 @@
 <!--CLOSET TEMPLATE-->
 <template name="closet">
+  {{#if Template.subscriptionsReady}}
   <div id="userPro" class="container">
     <div id="profile" class="row">
       <div class="col-xs-12 col-sm-6 profile-col">
@@ -68,37 +69,8 @@
 
           </div>
           {{#each products}}
-          <div class="col-xs-12 col-md-6 product">
-            <div class="product">
-              <a class="" href="/product/{{link_id}}">
-                <img src="{{this.image}}" alt="">
-                <div class="description">
-                  <a class="avatar product-desc"> </a>
-                  <p class="price">{{price}}</p>
-                  <p class="condition">{{type}}</p>
-                  <p class="title product-desc">{{name}}</p>
-                  {{#if isListed}}
-                   <i class="fa fa-check-circle-o verified"></i>
-                  {{else}}
-                    <i class="fa fa-times-circle not-verified"></i>
-                  {{/if}}
-                </div>
-              </a>
-              {{#if isOwner}}
-                {{#unless isListed}}
-                <form class="idUpdate">
-                  <fieldset class="form-group">
-                    <label for="product_id">Verify Listing</label>
-                    <input type="text" class="form-control productId" name="text" placeholder="Set product Id" />
-                  </fieldset>
-                  <button type="submit" class="btn-default submit-link hvr-sweep-to-right" data-dismiss="modal">Submit</button>
-                </form>
-                {{/unless}}
-              {{/if}}
-            </div>
-          </div>
+            {{> closetProduct}}
           {{/each}}
-
 
           <div class="col-xs-12 col-md-6 product">
             {{#if isUser}}
@@ -116,7 +88,7 @@
       </div>
     </div>
   </div>
-
+  {{/if}}
   <!--EDIT PROFILE MODAL (INITIAL SETUP)-->
   <div class="modal fade" data-backdrop="static" data-keyboard="false" id="editProfile">
         <div class="modal-dialog">
@@ -194,9 +166,9 @@
 
 <!--PROFILE IMAGE-->
 <template name="profileImageForm">
-  {{> quickForm collection=Collections.ProfileImages type="insert" id="add-image"}} <!--cloudinary quickform-->
+  <!--{{> quickForm collection=Collections.ProfileImages type="insert" id="add-image"}} cloudinary quickform-->
 </template>
 <!--EDIT PROFILE IMAGE-->
 <template name="editProfileImage">
-  {{> quickForm collection=Collections.ProfileImages type="update" id="edit-image"}} <!--cloudinary quickform-->
+  <!--{{> quickForm collection=Collections.ProfileImages type="update" id="edit-image"}} cloudinary quickform-->
 </template>

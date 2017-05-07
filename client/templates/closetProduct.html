@@ -1,0 +1,31 @@
+<template name = "closetProduct">
+  <div class="col-xs-12 col-md-6 product">
+    <div class="product">
+      <a class="" href="/product/{{link_id}}">
+        <img src="{{productImage}}" alt="" class="img-thumbnail">
+        <div class="description">
+          <a class="avatar product-desc"> </a>
+          <p class="price">{{price}}</p>
+          <p class="condition">{{type}}</p>
+          <p class="title product-desc">{{name}}</p>
+          {{#if published}}
+           <i class="fa fa-check-circle-o verified"></i>
+          {{else}}
+            <i class="fa fa-times-circle not-verified"></i>
+          {{/if}}
+        </div>
+      </a>
+      {{#if isOwner}}
+        {{#unless published}}
+        <form class="idUpdate">
+          <fieldset class="form-group">
+            <label for="product_id">Verify Listing</label>
+            <input type="text" class="form-control productId" name="text" placeholder="Set product Id" />
+          </fieldset>
+          <button type="submit" class="btn-default submit-link hvr-sweep-to-right" data-dismiss="modal">Submit</button>
+        </form>
+        {{/unless}}
+      {{/if}}
+    </div>
+  </div>
+</template>

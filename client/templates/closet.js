@@ -3,6 +3,7 @@ import { Accounts } from '/lib/collections';
 import { Meteor } from "meteor/meteor";
 import { Template } from 'meteor/templating';
 import { ProfileImages } from '../../lib/profileImages.js';
+import { UserProducts } from '/imports/plugins/custom/product_upload/lib/collections';
 
 //FOR PROFILE IMAGE FORM
 const Collections = {
@@ -22,7 +23,7 @@ Template.closet.rendered = function(){
     var account = Accounts.findOne({
       "userId": userId
     });
-    Session.set('userCloset', account);
+    Session.set('userCloset', account.profile.closet);
   });
   this.subscribe('userProductsByUser', userId);
 
@@ -73,19 +74,18 @@ Template.closet.helpers({
   },*/
   //super important function that allows us to index the current user that is showed in closet
   firstName: function(){
-    return Session.get("userCloset").profile.closet.first_name;
+    return Session.get("userCloset").first_name;
   },
   lastName: function() {
-    return Session.get("userCloset").profile.closet.last_name;
+    return Session.get("userCloset").last_name;
   },
   aboutYou: function(){
-    return Session.get("userCloset").profile.closet.about;
+    return Session.get("userCloset").about;
   },
-  /*products: function(){
-    var user = Router.current().params.userId;
-    var email = Meteor.users.findOne({"_id":user}).emails[0].address;
-    return userProducts.find({author: email}).fetch()
+  products: function(){
+    return UserProducts.find({});
   },
+  /*
   isVerified: function(){
     var user = Router.current().params.userId;
     return Meteor.users.findOne({"_id":user}).emails[0].verified;
